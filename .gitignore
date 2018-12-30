@@ -2,6 +2,7 @@
 node_modules
 /public
 /src
+/dist
 .browserslistrc
 .eslintrc.js
 babel.config.js
