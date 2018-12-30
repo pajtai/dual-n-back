@@ -1,5 +1,9 @@
 # dual-n-back
 
+Work in progress for a dual n back game.
+
+Demo is at: https://pajtai.github.io/dual-n-back/
+
 ## Project setup
 ```
 npm install
