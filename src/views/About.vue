@@ -8,6 +8,6 @@
       NBack level is 2 and the number being shown is 5, the previous number was 0, and the one before that was 5, you should
       hit the right arrow.</p>
     <p>You will get a point for each position or color entered correctly. You will lose a point for each position or number
-      you miss.</p>
+      you miss, and you will lose a point for each position or number you enter when it's not a match.</p>
   </div>
 </template>
