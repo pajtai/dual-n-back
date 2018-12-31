@@ -1,20 +1,14 @@
 <template>
 <div class="page">
   <div class="score">NBack:
-    <select v-model.number="nBackLevel">
-      <option>1</option>
-      <option>2</option>
-      <option>3</option>
-      <option>4</option>
-      <option>5</option>
-    </select> - Points: {{ points }}</div>
+    <input class="score__input" v-model.number="nBackLevel"/> - Points: {{ points }}</div>
   <table class="grid">
     <tr class="grid__row" v-for="row in rows" v-bind:key="row">
       <td
         class="grid__cell"
         v-for="column in columns"
         :key="column"
-        :class="{ grid__selected: (selectedRow === row && selectedColumn === column) }">
+        :class="{ grid__selected: (selectedRow === row && selectedColumn === column), hidden }">
         <span class="grid__number" v-if="selectedRow === row && selectedColumn === column">{{ selectedNumber }}</span>
         <span v-else>&nbsp;</span>
       </td>
@@ -38,7 +32,8 @@ export default {
       selectedColumn: 2,
       selectedNumber: 5,
       nBackLevel: 1,
-      points: 0
+      points: 0,
+      hidden: false
     };
   },
   created() {
@@ -55,15 +50,22 @@ export default {
   },
   methods: {
     createSelection() {
-      this.checkForPenalty();
-      this.tries.number = false;
-      this.tries.position = false;
+      this.hideSelection();
+      setTimeout(this.showSelection, 200);
 
+    },
+    hideSelection() {
+      this.hidden = true;
+    },
+    showSelection() {
+      this.checkForPenalty();
       this.selectedColumn = this.getRandomPosition();
       this.selectedRow = this.getRandomPosition();
       this.selectedNumber = this.getRandomNumber();
-
+      this.tries.number = false;
+      this.tries.position = false;
       this.pushToHistory();
+      this.hidden = false;
     },
     checkForPenalty() {
       if (this.history.length < 1 + this.nBackLevel) {
@@ -100,7 +102,6 @@ export default {
       }
       this.tries.number = true;
       this.points += this.checkNumber() ? 1 : -1;
-      console.log(this.points);
     },
     userSelectedPosition() {
       if (this.tries.position) {
@@ -108,10 +109,10 @@ export default {
       }
       this.tries.position = true;
       this.points += this.checkPosition() ? 1 : -1;
-      console.log(this.points);
     },
     checkNumber() {
       const length = this.history.length;
+
       return (
         this.selectedNumber ===
         this.history[length - 1 - this.nBackLevel].number
@@ -135,8 +136,6 @@ export default {
 
       if (length > this.nBackLevel + 1) {
         this.history = this.history.splice(length - this.nBackLevel - 1);
-        console.log("nBackLevel:", this.nBackLevel, typeof this.nBackLevel);
-        console.log("history length:", this.history.length);
       }
     }
   }
@@ -151,6 +150,11 @@ export default {
     width: 200px;
     height: 200px;
     text-align: center;
+    -webkit-transition: opacity 100ms ease-in-out;
+    -moz-transition: opacity 100ms ease-in-out;
+    -o-transition: opacity 100ms ease-in-out;
+    transition: opacity 100ms ease-in-out;
+    opacity: 1;
   }
   &,
   &__row,
@@ -183,5 +187,14 @@ export default {
 .score {
   font-size: 2em;
   font-weight: bolder;
+  &__input {
+    font-size: 1em;
+  }
+}
+.hidden {
+  opacity: 0;
+}
+.shown {
+  opacity: 1;
 }
 </style>
