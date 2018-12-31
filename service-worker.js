@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/dual-n-back/precache-manifest.b713e0916930ba52053eb8e379232806.js"
+  "/dual-n-back/precache-manifest.868a0fb94f47b126e7b48b5c1c2efa2b.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "dual-n-back"});
